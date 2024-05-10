@@ -1,49 +1,27 @@
 import okx.Account as Account
 import okx.Trade as trade
 import pprint
+import requests
+import datetime
+from time import sleep
+import pandas as pd
+import numpy as np
+
+#telegram
+TOKEN = '6959314930:AAHnekjhCc2d_CHFLxE9hFWAZuIgQMD8wzY'
+chat_id='947159905'
+
+# print(requests.get(url).json())
+#-------------------------------------
+
+#OKX
 api_key='43f5df59-5e61-4d24-875e-f32c003e0430'
 secret_key='5B1063B322635A27CF01BACE3772E0E0'
 passphrase='Parkwood270298)'
 flag = "1"  # live trading: 0, demo trading: 1
 accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
 tradeAPI = trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
-# result = tradeAPI.place_order(
-#     instId="BTC-USDT-SWAP",
-#     tdMode="isolated",
-#     side="buy",
-#     posSide="long",
-#     ordType="market",
-#     sz="10",
-#     tpTriggerPx=70000,  # take profit trigger price
-#     tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
-#     tpTriggerPxType="last",
-#     slTriggerPx=55000,  # take profit trigger price
-#     slOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
-#     slTriggerPxType="last"
-# )
-# print(result)
-# result = tradeAPI.place_order(
-#                 instId="BTC-USDT-SWAP",
-#                 tdMode="isolated",
-#                 side="sell",
-#                 posSide="short",
-#                 ordType="market",
-#                 sz="1",
-#                 tpTriggerPx=60000,  # take profit trigger price
-#                 tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
-#                 tpTriggerPxType="last",
-#                 slTriggerPx=70000,      # take profit trigger price
-#                 slOrdPx="-1",           # taker profit order price。When it is set to -1，the order will be placed as an market order
-#                 slTriggerPxType="last"
-#             )
-# print(result)
-# pprint.pprint(len(result['data']))
-
-
-import datetime
-from time import sleep
-import pandas as pd
-import numpy as np
+#-------------------------------------------------
 
 while True:
     # в 1 час 12 раз по 5 минут, 4 раза по 15 минут, 2 раза по 30 минут
@@ -106,7 +84,7 @@ while True:
                 if support_condition and (mean_low - df.loc[candle].close) > zone_width * 2:
                     levelbreak = 2
             return levelbreak
-        df['pattern_detected'] = df.apply(lambda row: detect_structure(row.name, backcandles=40, window=9), axis=1)
+        df['pattern_detected'] = df.apply(lambda row: detect_structure(row.name, backcandles=60, window=9), axis=1)
         # print(df.tail(2))
         print(df["pattern_detected"].iloc[-1])
         # print(df['close'].iloc[-1])
@@ -118,7 +96,7 @@ while True:
         if df["pattern_detected"].iloc[-1]==1 and res<1:
             #Long
             stop=round(low*0.999, 1)
-            take = round(((close-stop)*3)+close, 1)
+            take = round(((close-stop)*2.5)+close, 1)
             print('------------LONG-------------')
             print(f'Take {take}')
             print(f'Coin {close}')
@@ -137,11 +115,16 @@ while True:
                 slOrdPx="-1",           # taker profit order price。When it is set to -1，the order will be placed as an market order
                 slTriggerPxType="last"
             )
+            message = (f'------LONG------- \n'
+                       f'Take profit {take}\n'
+                       f'Coin {close}\n'
+                       f'Stop loss {stop}')
+            url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
             print(result)
         elif df["pattern_detected"].iloc[-1]==2 and res<1:
             #Long
             stop = round(high * 1.001, 1)
-            take = round(close-((stop - close) * 3) , 1)
+            take = round(close-((stop - close) * 2.5) , 1)
             print('------------SHORT-------------')
             print(f'Stop {stop}')
             print(f'Coin {close}')
@@ -160,6 +143,10 @@ while True:
                 slOrdPx="-1",           # taker profit order price。When it is set to -1，the order will be placed as an market order
                 slTriggerPxType="last"
             )
+            message = (f'------SHORT------- \n'
+                       f'Stop loss {stop}\n'
+                       f'Coin {close}\n'
+                       f'Take profit {take}')
+            url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
             print(result)
         sleep(60)
-print('dsddedwe')

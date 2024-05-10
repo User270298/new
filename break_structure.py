@@ -117,7 +117,6 @@ class MyStrat(Strategy):
         if self.signal1 == 1 and self.position.size==0:
             print('-----------Long-------------')
             print(self.data.index.values[-1]+1)
-
             stop_loss = self.data.Close[-1] * slcoef
             take_profit = ((self.data.Close[-1] - stop_loss) * TPSLRatio) + self.data.Close[-1]
             print('TP ', take_profit)
