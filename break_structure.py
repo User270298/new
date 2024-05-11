@@ -19,9 +19,9 @@ pd.set_option('display.max_rows', None)
 df = pd.DataFrame(candles, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
 # Преобразование timestamp в удобочитаемый формат
 df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-df.to_csv('btcusdt_data_6m.csv', index=False)
+# df.to_csv('btcusdt_data_6m.csv', index=False)
 
-df = pd.read_csv("btcusdt_data_6m.csv")
+df = pd.read_csv("classmates.csv")
 df=df[df['volume']!=0]
 df=df[0:1000]
 # print(len(df))

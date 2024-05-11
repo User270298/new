@@ -120,6 +120,7 @@ while True:
                        f'Coin {close}\n'
                        f'Stop loss {stop}')
             url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
+            requests.get(url).json()
             print(result)
         elif df["pattern_detected"].iloc[-1]==2 and res<1:
             #Long
@@ -148,5 +149,6 @@ while True:
                        f'Coin {close}\n'
                        f'Take profit {take}')
             url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
+            requests.get(url).json()
             print(result)
         sleep(60)
