@@ -1,0 +1,16 @@
+[Unit]
+Description=tg-bot
+After=multi-user.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+Restart=always
+WorkingDirectory=/root/bot
+ExecStart=/root/bot/websocket23.py
+RestartSec=3
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
