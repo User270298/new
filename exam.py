@@ -14,17 +14,27 @@ chat_id='947159905'
 # print(requests.get(url).json())
 #-------------------------------------
 
-#OKX
-api_key='43f5df59-5e61-4d24-875e-f32c003e0430'
-secret_key='5B1063B322635A27CF01BACE3772E0E0'
+# live trading: 0, demo trading: 1
+#OKX demo trading
+# api_key='43f5df59-5e61-4d24-875e-f32c003e0430'
+# secret_key='5B1063B322635A27CF01BACE3772E0E0'
+# passphrase='Parkwood270298)'
+# flag = "1"
+
+#OKX live trading
+api_key='f8bcadcc-bed3-4fca-96e7-4f314f43136b'
+secret_key='F56CF3942B876FDEDEF547C90B04F206'
 passphrase='Parkwood270298)'
-flag = "1"  # live trading: 0, demo trading: 1
+flag = "0"
+
 accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
 tradeAPI = trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
 #-------------------------------------------------
 count_long=0
 count_short=0
 ordId=0
+risk=5
+foulder=20
 
 while True:
     try:
@@ -103,13 +113,15 @@ while True:
                 low = rslt_df_low['pointpos'].iloc[-1]
                 close = df['close'].iloc[-1]
                 coin=coin[:-4]
+
                 print(f'Coin: {coin}')
                 # print(type(coin))
                 # print(list_coins)
                 if df["pattern_detected"].iloc[-1]==1 and (coin not in list_coins):
                     #Long
-                    stop=low*0.999
+                    stop=low*0.9996
                     take = ((close-stop)*2.5)+close
+                    percent_sz = ((risk / (foulder * ((close - stop) / close))) * 100) / close
                     print('------------LONG-------------')
                     print(f'Take {take}')
                     print(f'Coin {close}')
@@ -120,7 +132,7 @@ while True:
                         side="buy",
                         posSide="long",
                         ordType="market",
-                        sz="40",
+                        sz=str(percent_sz),
                         tpTriggerPx=take,  # take profit trigger price
                         tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
                         tpTriggerPxType="last",
@@ -168,8 +180,9 @@ while True:
                     # print(result)
                 elif df["pattern_detected"].iloc[-1]==2 and (coin not in list_coins):
                     #Short
-                    stop = high * 1.001
+                    stop = high * 1.0004
                     take = close-((stop - close) * 2.5)
+                    percent_sz = ((risk / (foulder * ((stop - close) / close))) * 100) / close
                     print('------------SHORT-------------')
                     print(f'Stop {stop}')
                     print(f'Coin {close}')
@@ -180,7 +193,7 @@ while True:
                         side="sell",
                         posSide="short",
                         ordType="market",
-                        sz="40",
+                        sz=str(percent_sz),
                         tpTriggerPx=take,  # take profit trigger price
                         tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
                         tpTriggerPxType="last",

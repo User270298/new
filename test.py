@@ -12,25 +12,37 @@ api_key='43f5df59-5e61-4d24-875e-f32c003e0430'
 secret_key='5B1063B322635A27CF01BACE3772E0E0'
 passphrase='Parkwood270298)'
 flag = "1"  # live trading: 0, demo trading: 1
+
+# api_key='f8bcadcc-bed3-4fca-96e7-4f314f43136b'
+# secret_key='F56CF3942B876FDEDEF547C90B04F206'
+# passphrase='Parkwood270298)'
+# flag = "0"
+
 accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
 tradeAPI = trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
 # result = tradeAPI.get_orders_history(
 #     instType="SWAP"
 # )
+risk=5
+foulder=20
+close
+percent_sz = ((risk / (foulder * ((close - stop) / close))) * 100) / close
 result = tradeAPI.place_order(
-                instId="BTC-USDT-SWAP",
+                instId="ADA-USDT-SWAP",
                 tdMode="isolated",
                 side="buy",
                 posSide="long",
                 ordType="market",
-                sz="10",
-                tpTriggerPx='60000',  # take profit trigger price
-                tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
-                tpTriggerPxType="last",
-                slTriggerPx='56000',      # take profit trigger price
-                slOrdPx="-1",           # taker profit order price。When it is set to -1，the order will be placed as an market order
-                slTriggerPxType="last",
-                clOrdId='1'
+                sz="100",
+                # px='20000'
+                # tpTriggerPx='60000',  # take profit trigger price
+                # tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
+                # tpTriggerPxType="last",
+                # slTriggerPx='56000',      # take profit trigger price
+                # slOrdPx="-1",           # taker profit order price。When it is set to -1，the order will be placed as an market order
+                # slTriggerPxType="last",
+                # clOrdId='1',
+                # tgtCcy = "base_ccy"
             )
 print(result)
 # result=accountAPI.get_positions()
