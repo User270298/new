@@ -121,7 +121,7 @@ while True:
                     #Long
                     stop=low*0.9996
                     take = ((close-stop)*2.5)+close
-                    percent_sz = ((risk / (foulder * ((close - stop) / close))) * 100) / close
+                    percent_sz = ((risk / (foulder * ((close - stop) / stop))) * 100) / close
                     print('------------LONG-------------')
                     print(f'Take {take}')
                     print(f'Coin {close}')
@@ -142,7 +142,7 @@ while True:
                     )
 
                     message = (f'------LONG------- \n'
-                               f'coin: {coin}'
+                               f'coin: {coin}\n'
                                f'Take profit {take}\n'
                                f'Coin {close}\n'
                                f'Stop loss {stop}')

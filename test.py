@@ -25,8 +25,8 @@ tradeAPI = trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
 # )
 risk=5
 foulder=20
-close
-percent_sz = ((risk / (foulder * ((close - stop) / close))) * 100) / close
+
+# percent_sz = ((risk / (foulder * ((close - stop) / close))) * 100) / close
 result = tradeAPI.place_order(
                 instId="ADA-USDT-SWAP",
                 tdMode="isolated",
