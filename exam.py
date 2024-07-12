@@ -40,7 +40,7 @@ while True:
     try:
     # в 1 час 12 раз по 5 минут, 4 раза по 15 минут, 2 раза по 30 минут
     # Нужно каждые 61 бар делать статистику
-        for i in ["BTC-USDT-SWAP.csv", 'ETH-USDT-SWAP.csv',  'ADA-USDT-SWAP.csv', 'SOL-USDT-SWAP.csv']:
+        for i in ["BTC-USDT-SWAP.csv", 'ETH-USDT-SWAP.csv', 'SOL-USDT-SWAP.csv']:
             coin = i
             df = pd.read_csv(i)
             pd.options.display.max_rows = 2000
@@ -114,6 +114,13 @@ while True:
                 close = df['close'].iloc[-1]
                 coin=coin[:-4]
 
+                if coin=='BTC-USDT-SWAP':
+                    deliver=1000
+                elif coin=='ETH-USDT-SWAP':
+                    deliver=100
+                elif coin=='SOL-USDT-SWAP':
+                    deliver=10
+                # "BTC-USDT-SWAP.csv", 'ETH-USDT-SWAP.csv', 'SOL-USDT-SWAP.csv'
                 print(f'Coin: {coin}')
                 # print(type(coin))
                 # print(list_coins)
@@ -121,7 +128,7 @@ while True:
                     #Long
                     stop=low*0.9996
                     take = ((close-stop)*2.5)+close
-                    percent_sz = ((risk / (foulder * ((close - stop) / stop))) * 100) / close
+                    percent_sz = ((risk / (foulder * ((close - stop) / stop))) * deliver) / close
                     print('------------LONG-------------')
                     print(f'Take {take}')
                     print(f'Coin {close}')
@@ -132,7 +139,7 @@ while True:
                         side="buy",
                         posSide="long",
                         ordType="market",
-                        sz=str(percent_sz),
+                        sz=round(percent_sz, 1),
                         tpTriggerPx=take,  # take profit trigger price
                         tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
                         tpTriggerPxType="last",
@@ -182,7 +189,7 @@ while True:
                     #Short
                     stop = high * 1.0004
                     take = close-((stop - close) * 2.5)
-                    percent_sz = ((risk / (foulder * ((stop - close) / close))) * 100) / close
+                    percent_sz = ((risk / (foulder * ((stop - close) / close))) * deliver) / close
                     print('------------SHORT-------------')
                     print(f'Stop {stop}')
                     print(f'Coin {close}')
@@ -193,7 +200,7 @@ while True:
                         side="sell",
                         posSide="short",
                         ordType="market",
-                        sz=str(percent_sz),
+                        sz=round(percent_sz, 1),
                         tpTriggerPx=take,  # take profit trigger price
                         tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
                         tpTriggerPxType="last",

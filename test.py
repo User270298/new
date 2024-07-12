@@ -28,20 +28,20 @@ foulder=20
 
 # percent_sz = ((risk / (foulder * ((close - stop) / close))) * 100) / close
 result = tradeAPI.place_order(
-                instId="ADA-USDT-SWAP",
+                instId="ETH-USDT-SWAP",
                 tdMode="isolated",
                 side="buy",
                 posSide="long",
                 ordType="market",
-                sz="100",
-                # px='20000'
-                # tpTriggerPx='60000',  # take profit trigger price
-                # tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
-                # tpTriggerPxType="last",
-                # slTriggerPx='56000',      # take profit trigger price
-                # slOrdPx="-1",           # taker profit order price。When it is set to -1，the order will be placed as an market order
-                # slTriggerPxType="last",
-                # clOrdId='1',
+                sz=5.6,
+                # ccy='50',
+                tpTriggerPx='4000',  # take profit trigger price
+                tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
+                tpTriggerPxType="last",
+                slTriggerPx='3000',      # take profit trigger price
+                slOrdPx="-1",           # taker profit order price。When it is set to -1，the order will be placed as an market order
+                slTriggerPxType="last",
+                clOrdId='1',
                 # tgtCcy = "base_ccy"
             )
 print(result)
