@@ -133,7 +133,7 @@ while True:
                     percent_sz = round(((risk / (((middle - stop) / stop))) * deliver) / middle, 1)
                     print('------------LONG-------------')
                     print(f'Take {take}')
-                    print(f'Coin {close}')
+                    print(f'Coin {middle}')
                     print(f'Stop {stop}')
                     result = tradeAPI.place_order(
                         instId=coin,
@@ -154,7 +154,7 @@ while True:
                                f'coin: {coin}\n'
                                 f'Percent size {percent_sz}\n'
                                f'Take profit {take}\n'
-                               f'Coin {close}\n'
+                               f'Coin {middle}\n'
                                f'Stop loss {stop}')
 
                 elif df["pattern_detected"].iloc[-1]==2 and (coin not in list_coins):
@@ -165,7 +165,7 @@ while True:
 
                     print('------------SHORT-------------')
                     print(f'Stop {stop}')
-                    print(f'Coin {close}')
+                    print(f'Coin {middle}')
                     print(f'Take {take}')
                     result = tradeAPI.place_order(
                         instId=coin,
@@ -186,7 +186,7 @@ while True:
                                f'Coin: {coin}\n'
                                f'Percent size {percent_sz}\n'
                               f'Take profit {take}\n'
-                              f'Coin {close}\n'
+                              f'Coin {middle}\n'
                               f'Stop loss {stop}')
 
         sleep(60)
