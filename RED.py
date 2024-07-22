@@ -22,8 +22,11 @@ flag = "1"
 accountAPI = Account.AccountAPI(api_key, secret_key, passphrase, False, flag)
 tradeAPI = trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
 
+result=tradeAPI.get_order_list()
+pprint.pprint(result['data'])
 
-
+# result = accountAPI.get_positions()
+# print(len(result['data']))
 # result = tradeAPI.place_order(
 #                         instId='ETH-USDT-SWAP',
 #                         tdMode="isolated",
@@ -31,7 +34,7 @@ tradeAPI = trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
 #                         posSide="long",
 #                         ordType="limit",
 #                         sz='1',
-#                         px='3420',
+#                         px=3380,
 #                         tpTriggerPx=4000,  # take profit trigger price
 #                         tpOrdPx="-1",  # taker profit order price。When it is set to -1，the order will be placed as an market order
 #                         tpTriggerPxType="last",
@@ -41,9 +44,9 @@ tradeAPI = trade.TradeAPI(api_key, secret_key, passphrase, False, flag)
 #                     )
 # print(result)
 
-df = pd.read_csv("BTC-USDT-SWAP.csv")
-print(len(df))
-df = df.iloc[1:, :]
-
-# df.drop(index=2)
-print(len(df))
+# df = pd.read_csv("BTC-USDT-SWAP.csv")
+# print(len(df))
+# df = df.iloc[1:, :]
+#
+# # df.drop(index=2)
+# print(len(df))

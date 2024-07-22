@@ -51,7 +51,7 @@ def handle_message_1(message):
 
 
         if int(timeframe[14:16])%my_timeframe==0 and str(timeframe[17:19])=='00': #int(timeframe[14:16])%5==0 and int(timeframe[14:16])%15==0 and
-            print('Save to BTC-USDT-SWAP.csv')
+            # print('Save to BTC-USDT-SWAP.csv')
             with open("BTC-USDT-SWAP.csv", mode="a", encoding='utf-8') as w_file:
                 file_writer = csv.writer(w_file, delimiter=",", lineterminator="\r")
                 file_writer.writerow([timeframe, opened, high, low, close, volume])
@@ -70,7 +70,7 @@ def handle_message_2(message):
         timeframe=str(datetime.fromtimestamp(int(message['ts'])/1000))
         timeframe=timeframe[:19]
         if int(timeframe[14:16])%my_timeframe==0 and str(timeframe[17:19])=='00': #int(timeframe[14:16])%5==0 and int(timeframe[14:16])%15==0 and
-            print('Save to ETH-USDT-SWAP.csv')
+            # print('Save to ETH-USDT-SWAP.csv')
             with open("ETH-USDT-SWAP.csv", mode="a", encoding='utf-8') as w_file:
                 file_writer = csv.writer(w_file, delimiter=",", lineterminator="\r")
                 file_writer.writerow([timeframe, opened, high, low, close, volume])
@@ -88,7 +88,7 @@ def handle_message_3(message):
         timeframe=str(datetime.fromtimestamp(int(message['ts'])/1000))
         timeframe=timeframe[:19]
         if int(timeframe[14:16])%my_timeframe==0 and str(timeframe[17:19])=='00': #int(timeframe[14:16])%5==0 and int(timeframe[14:16])%15==0 and
-            print('Save to SOL-USDT-SWAP.csv')
+            # print('Save to SOL-USDT-SWAP.csv')
             with open("SOL-USDT-SWAP.csv", mode="a", encoding='utf-8') as w_file:
                 file_writer = csv.writer(w_file, delimiter=",", lineterminator="\r")
                 file_writer.writerow([timeframe, opened, high, low, close, volume])
